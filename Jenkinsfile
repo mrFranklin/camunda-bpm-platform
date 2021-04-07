@@ -24,7 +24,10 @@ pipeline {
     stage('ASSEMBLY') {
       when {
         expression {
-          env.BRANCH_NAME == cambpmDefaultBranch() || !pullRequest.labels.contains('no-build')
+          env.BRANCH_NAME == cambpmDefaultBranch()
+          if (env.CHANGE_ID) {
+              !pullRequest.labels.contains('no-build')
+          }
         }
       }
       steps {
