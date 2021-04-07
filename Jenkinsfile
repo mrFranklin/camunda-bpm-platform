@@ -28,9 +28,13 @@ pipeline {
     stage('ASSEMBLY') {
       when {
         expression {
-          env.BRANCH_NAME == cambpmDefaultBranch()
-          if (env.CHANGE_ID) {
-              !pullRequest.labels.contains('no-build')
+          anyOf {
+            branch cambpmDefaultBranch()
+            if (changeRequest()) {
+                !pullRequest.labels.contains('no-build')
+            } else {
+              return 'true'
+            }
           }
         }
       }
