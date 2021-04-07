@@ -4,6 +4,10 @@
 
 def failedStageTypes = []
 
+def cambpmDefaultBranch() {
+  return 'pipeline-master'
+}
+
 pipeline {
   agent {
     node {
